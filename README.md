@@ -1,15 +1,19 @@
 # Learn ceph by ceph/demo
-- [Learn ceph by ceph/demo](#learn-ceph-by-cephdemo)
-  - [Prepare image](#prepare-image)
-  - [Build image](#build-image)
-  - [ENV(default value)](#envdefault-value)
-  - [Start ceph-demo](#start-ceph-demo)
-  - [Check service status](#check-service-status)
-    - [check processes](#check-processes)
-    - [check ports](#check-ports)
+- [REF](#ref)
+- [Prepare image](#prepare-image)
+- [Build image](#build-image)
+- [ENV(default value)](#envdefault-value)
+- [Start ceph-demo](#start-ceph-demo)
+- [Check service status](#check-service-status)
+  - [check processes](#check-processes)
+  - [check ports](#check-ports)
 
-  - [Check RGW service](#check-rgw-service)
-  - [Usage](#usage)
+- [Check RGW service](#check-rgw-service)
+- [Usage](#usage)
+
+## REF
+- [ceph/demo](https://github.com/ceph/ceph-docker/tree/master/demo)
+- [Ceph From Scratch(ebook)](https://www.gitbook.com/book/tobegit3hub1/ceph_from_scratch/details)
 
 ## Prepare image
 
@@ -23,7 +27,7 @@ $ docker pull ceph/demo
 $ docker build -t xjimmyshcn/ceph .
 ```
 
-## ENV(default value)
+## docker image ENV(default value)
 
 ```shell
 CLUSTER = ceph
@@ -34,13 +38,17 @@ CEPH_REST_API_PORT = 5500 # Ceph REST API is a WSGI application and it listens o
 MON_IP = ${host_ip}
 ```
 
-## Start ceph-demo
+## Start ceph-demo container
 
 ```shell
 $ HOST_IP=$(grep " $(route -n | awk '/UG/{print $NF}' ) " <(ip route) | grep  -v default | grep src | awk '{for(i=1;i<=NF;i++){if($i=="src"){print $(i+1)}}}')
 $ PREFIX=$(grep " $(route -n | awk '/UG/{print $NF}' ) " <(ip route) | grep  -v default | grep src | awk '{print $1}')
 
 $ docker run -d --name=ceph-demo --privileged=true --net=host -v /etc/ceph:/etc/ceph -v /dev:/dev -v /sys:/sys -e MON_IP=${HOST_IP} -e CEPH_NETWORK=${PREFIX} xjimmyshcn/ceph
+
+$ docker ps                 
+  CONTAINER ID    IMAGE            COMMAND             CREATED         STATUS       PORTS     NAMES
+  75ba7038a2e1    f6049aada6f3     "/entrypoint.sh"    21 hours ago    Up 4 hours             ceph-demo
 ```
 
 ## Check service status
