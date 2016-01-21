@@ -12,6 +12,7 @@ RUN dpkg -i linux-libc-dev_3.13.0-75.119_amd64.deb
 #jq process json
 RUN apt-get install -y python-pip curl libxml2-utils jq
 RUN pip install s3cmd
+RUN pip install python-swiftclient
 
 ##################################################
 # Add bootstrap script
