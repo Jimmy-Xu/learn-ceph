@@ -5,7 +5,7 @@ set -e
 : ${RGW_NAME:=$(hostname -s)}
 : ${MON_NAME:=$(hostname -s)}
 : ${RGW_CIVETWEB_PORT:=8800}
-: ${RADOSGW_PORT:=5500}
+: ${CEPH_REST_API_PORT:=5500}
 
 CEPH_OPTS="--cluster ${CLUSTER}"
 
@@ -41,7 +41,7 @@ osd pool default pgp num = 8
 osd pool default size = 1
 public network = ${CEPH_NETWORK}
 cluster network = ${CEPH_NETWORK}
-public addr = ${RADOSGW_PORT}
+public addr = ${CEPH_REST_API_PORT}
 ENDHERE
 
    # Generate administrator key
