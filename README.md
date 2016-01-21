@@ -99,5 +99,6 @@ $ xmllint --format <(curl -s http://127.0.0.1:8800)
 ```
 
 ## Usage
-- [Use RGW](rgw_usage.md)
-- [Use RBD](rbd_usage.md)
+- [Use RGW](doc/rgw_usage.md)
+- [Use RBD](doc/rbd_usage.md)
+- [Use Ceph Rest API](doc/ceph-rest-api_usage.md)
