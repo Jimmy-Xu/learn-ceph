@@ -52,6 +52,26 @@ $ docker ps
 ```
 
 ## Check service status
+### check all status
+
+```shell
+$ ceph status
+    cluster 5a59d555-3133-45f2-a898-fd7d9a0862dd
+     health HEALTH_WARN
+            too many PGs per OSD (2152 > max 300)
+            mon.mini-ubuntu low disk space
+     monmap e1: 1 mons at {mini-ubuntu=192.168.1.137:6789/0}
+            election epoch 1, quorum 0 mini-ubuntu
+     mdsmap e20: 1/1/1 up {0=0=up:active}
+     osdmap e75: 1 osds: 1 up, 1 in
+            flags sortbitwise
+      pgmap v990: 2152 pgs, 15 pools, 116 MB data, 513 objects
+            37471 MB used, 6933 MB / 46805 MB avail
+                2152 active+clean
+
+$ ceph status --format=json
+```
+
 ### check processes
 
 ```shell
@@ -102,3 +122,4 @@ $ xmllint --format <(curl -s http://127.0.0.1:8800)
 - [Use RGW](doc/rgw_usage.md)
 - [Use RBD](doc/rbd_usage.md)
 - [Use Ceph Rest API](doc/ceph-rest-api_usage.md)
+- [Ceph GUI](doc/ceph-gui.md)
