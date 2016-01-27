@@ -69,7 +69,7 @@ $ rados lspools | grep test_pool
 ```shell
 $ ceph osd pool get test_pool all     
   size: 1
-  min_size: 1
+  min_size: 1lsm
   crash_replay_interval: 0
   pg_num: 1024
   pgp_num: 1024
@@ -212,8 +212,19 @@ $ rbd info test_pool/test_image
 $ rbd map test_image --pool test_pool
   /dev/rbd0
 
-//FAQ 1: modinfo: ERROR: Module alias rbd not found.
+//FAQ 1: 
+modinfo: ERROR: Module alias rbd not found.
 need load rbd module in Host OS
+
+//FAQ 2: 
+libkmod: ERROR ../libkmod/libkmod.c:556 kmod_search_moddep: could not open moddep file '/lib/modules/3.19.0-25-generic/modules.dep.bin'
+modinfo: ERROR: Module alias rbd not found.
+modprobe: ERROR: ../libkmod/libkmod.c:556 kmod_search_moddep() could not open moddep file '/lib/modules/3.19.0-25-generic/modules.dep.bin'
+rbd: failed to load rbd kernel module (1)
+rbd: sysfs write failed
+rbd: map failed: (2) No such file or directory
+
+//Solution:
 $ sudo modprobe rbd
 $ lsmod | grep rbd
   rbd                    68638  0
