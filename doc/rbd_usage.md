@@ -224,13 +224,14 @@ rbd: failed to load rbd kernel module (1)
 rbd: sysfs write failed
 rbd: map failed: (2) No such file or directory
 
-//Solution:
+//Solution: load rbd module in host os
 $ sudo modprobe rbd
 $ lsmod | grep rbd
   rbd                    68638  0
   libceph               239089  1 rbd
 
-//FAQ 2: rbd: map failed: (30) Read-only file system
+//FAQ 3: rbd: map failed: (30) Read-only file system
+//Solution:
   need `--privileged` parameter when run ceph-demo container
 ```
 
