@@ -311,6 +311,49 @@ open http://<host_ip>:8888 in web browser
 login with admin:aaa123aa
 ```
 
+#### Connect Ceph servers to Calamari
+##### install ceph-deploy
+
+```
+$ apt-get install ceph-deploy
+```
+
+##### connect server
+> mini-ubuntu is hostname of ceph node
+
+```
+$ ceph-deploy calamari connect mini-ubuntu
+  [ceph_deploy.conf][DEBUG ] found configuration file at: /root/.cephdeploy.conf
+  [ceph_deploy.cli][INFO  ] Invoked (1.5.31): /usr/bin/ceph-deploy calamari connect mini-ubuntu
+  [ceph_deploy.cli][INFO  ] ceph-deploy options:
+  [ceph_deploy.cli][INFO  ]  username                      : None
+  [ceph_deploy.cli][INFO  ]  verbose                       : False
+  [ceph_deploy.cli][INFO  ]  overwrite_conf                : False
+  [ceph_deploy.cli][INFO  ]  subcommand                    : connect
+  [ceph_deploy.cli][INFO  ]  quiet                         : False
+  [ceph_deploy.cli][INFO  ]  cd_conf                       : <ceph_deploy.conf.cephdeploy.Conf instance at 0x7f09f4227f80>
+  [ceph_deploy.cli][INFO  ]  cluster                       : ceph
+  [ceph_deploy.cli][INFO  ]  master                        : None
+  [ceph_deploy.cli][INFO  ]  func                          : <function calamari at 0x7f09f4b29938>
+  [ceph_deploy.cli][INFO  ]  ceph_conf                     : None
+  [ceph_deploy.cli][INFO  ]  hosts                         : ['mini-ubuntu']
+  [ceph_deploy.cli][INFO  ]  default_release               : False
+  [mini-ubuntu][DEBUG ] connected to host: mini-ubuntu
+  [mini-ubuntu][DEBUG ] detect platform information from remote host
+  [mini-ubuntu][DEBUG ] detect machine type
+  [ceph_deploy.calamari][INFO  ] Distro info: Ubuntu 14.04 trusty
+  [ceph_deploy.calamari][INFO  ] assuming that a repository with Calamari packages is already configured.
+  [ceph_deploy.calamari][INFO  ] Refer to the docs for examples (http://ceph.com/ceph-deploy/docs/conf.html)
+  [mini-ubuntu][DEBUG ] creating config dir: /etc/salt/minion.d
+  [mini-ubuntu][DEBUG ] creating the calamari salt config: /etc/salt/minion.d/calamari.conf
+  [mini-ubuntu][INFO  ] Running command: env DEBIAN_FRONTEND=noninteractive DEBIAN_PRIORITY=critical apt-get --assume-yes -q --no-install-recommends install salt-minion
+  [mini-ubuntu][DEBUG ] Reading package lists...
+  [mini-ubuntu][DEBUG ] Building dependency tree...
+  [mini-ubuntu][DEBUG ] Reading state information...
+  [mini-ubuntu][DEBUG ] salt-minion is already the newest version.
+  [mini-ubuntu][DEBUG ] 0 upgraded, 0 newly installed, 0 to remove and 19 not upgraded.
+```
+
 ### Use Crapworks/ceph-dash
 
 ```shell
