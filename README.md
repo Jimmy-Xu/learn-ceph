@@ -1,14 +1,13 @@
 # Learn ceph by ceph/demo
 - [REF](#ref)
 - [Prepare image](#prepare-image)
-- [Build image](#build-image)
-- [ENV(default value)](#envdefault-value)
-- [Start ceph-demo](#start-ceph-demo)
+- [Start ceph-demo container](#start-ceph-demo-container)
 - [Check service status](#check-service-status)
+  - [check all status](#check-all-status)
   - [check processes](#check-processes)
   - [check ports](#check-ports)
-
 - [Check RGW service](#check-rgw-service)
+- [Test rest api](#test-rest-api)
 - [Usage](#usage)
 
 ## REF
@@ -21,30 +20,13 @@
 $ docker pull ceph/demo
 ```
 
-## Build image
-
-```shell
-$ docker build -t xjimmyshcn/ceph .
-```
-
-## docker image ENV(default value)
-
-```shell
-CLUSTER = ceph
-RGW_NAME = $(hostname -s)
-MON_NAME = $(hostname -s)
-RGW_CIVETWEB_PORT = 8800  # the port of the rados gateway (DEFAULT: 80)
-CEPH_REST_API_PORT = 5500 # Ceph REST API is a WSGI application and it listens on port 5000 by default
-MON_IP = ${host_ip}
-```
-
 ## Start ceph-demo container
 
 ```shell
-$ HOST_IP=$(grep " $(route -n | awk '/UG/{print $NF}' ) " <(ip route) | grep  -v default | grep src | awk '{for(i=1;i<=NF;i++){if($i=="src"){print $(i+1)}}}')
-$ PREFIX=$(grep " $(route -n | awk '/UG/{print $NF}' ) " <(ip route) | grep  -v default | grep src | awk '{print $1}')
+//to create a new ceph, please remove the old ceph config
+$ sudo rm -rf /etc/ceph/ceph.*
 
-$ docker run -d --name=ceph-demo --privileged=true --net=host -v /etc/ceph:/etc/ceph -v /dev:/dev -v /sys:/sys -e MON_IP=${HOST_IP} -e CEPH_NETWORK=${PREFIX} xjimmyshcn/ceph
+$ ./start.sh
 
 $ docker ps                 
   CONTAINER ID    IMAGE            COMMAND             CREATED         STATUS       PORTS     NAMES
@@ -87,6 +69,9 @@ $ docker exec -it ceph-demo ps -ef
 
 ### check ports
 
+>8800  # the port of the rados gateway (DEFAULT: 80)  
+>5500  # Ceph REST API is a WSGI application and it listens on port 5000 by default  
+
 ```shell
 $ docker exec -it ceph-demo netstat -tnopl | grep -v " - "
   Active Internet connections (only servers)
@@ -116,6 +101,13 @@ $ xmllint --format <(curl -s http://127.0.0.1:8800)
     </Owner>
     <Buckets/>
   </ListAllMyBucketsResult>
+```
+
+## Test rest api
+
+```shell
+$ curl 127.0.0.1:5500/api/v0.1/health
+  HEALTH_OK
 ```
 
 ## Usage

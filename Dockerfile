@@ -22,7 +22,7 @@ RUN echo "export TERM=vt100" >> /root/.bashrc
 ADD entrypoint.sh /entrypoint.sh
 
 # Add volumes for Ceph config and data
-VOLUME ["/etc/ceph","/var/lib/ceph"]
+VOLUME ["/etc/ceph","/var/lib/ceph","/var/log/ceph"]
 
 # Expose the Ceph ports
 # (change 80 to 8800, avoid conflict with other web server

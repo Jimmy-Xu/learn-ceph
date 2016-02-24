@@ -5,7 +5,10 @@ set -e
 : ${RGW_NAME:=$(hostname -s)}
 : ${MON_NAME:=$(hostname -s)}
 : ${RGW_CIVETWEB_PORT:=8800}
-: ${CEPH_REST_API_PORT:=5500}
+: ${RESTAPI_PORT:=5500}
+: ${RESTAPI_BASE_URL:=/api/v0.1}
+: ${RESTAPI_LOG_LEVEL:=warning}
+: ${RESTAPI_LOG_FILE:=/var/log/ceph/ceph-restapi.log}
 
 CEPH_OPTS="--cluster ${CLUSTER}"
 
@@ -41,7 +44,15 @@ osd pool default pgp num = 8
 osd pool default size = 1
 public network = ${CEPH_NETWORK}
 cluster network = ${CEPH_NETWORK}
-public addr = ${CEPH_REST_API_PORT}
+public addr = 0.0.0.0:${RESTAPI_PORT}
+ENDHERE
+
+cat <<ENDHERE >>/etc/ceph/${CLUSTER}.conf
+[client.restapi]
+public addr = ${MON_IP}:${RESTAPI_PORT}
+restapi base url = ${RESTAPI_BASE_URL}
+restapi log level = ${RESTAPI_LOG_LEVEL}
+log file = ${RESTAPI_LOG_FILE}
 ENDHERE
 
    # Generate administrator key
