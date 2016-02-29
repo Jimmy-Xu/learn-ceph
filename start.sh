@@ -11,6 +11,6 @@ PREFIX:  ${PREFIX}
 EOF
 
 echo "# start single node ceph"
-CMD_LINE="docker run -d --name=ceph-demo --privileged=true --net=host -v /etc/ceph:/etc/ceph -v /var/log/ceph:/var/log/ceph -v /dev:/dev -v /sys:/sys -e MON_IP=${HOST_IP} -e CEPH_NETWORK=${PREFIX} xjimmyshcn/ceph"
+CMD_LINE="docker run -d --name=ceph-demo --privileged=true --net=host -v /etc/ceph:/etc/ceph -v /var/log/ceph:/var/log/ceph -v /var/lib/ceph:/var/lib/ceph -v /dev:/dev -v /sys:/sys -e MON_IP=${HOST_IP} -e CEPH_NETWORK=${PREFIX} xjimmyshcn/ceph"
 echo "cmd: ${CMD_LINE}"
 ${CMD_LINE}
